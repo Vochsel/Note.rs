@@ -22,10 +22,14 @@ textarea {
 	text-align: center;
 	width: 50vw;
 	margin: 0 auto;
+	color: #F5A92F;
+	cursor: pointer;
 }
 
 #tag {
 	font-size: 3vw;
+	color: #8F631D;
+	cursor: text;
 }
 
 #note {
