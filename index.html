@@ -40,9 +40,12 @@
 	});
 
 	window.onload = function(e) {
-		tag = storage.getItem("lastTag");
-		if(tag == "")
+		if(storage.valueOf("lastTag") == null) {
 			storage.setItem("lastTag", "MyFirstNote");
+			storage.setItem(tag, "Welcome! Please feel free to write a note :D");
+		}
+		tag = storage.getItem("lastTag");
+		
 		tagElement.innerHTML = tag;
 		note.value = storage.getItem(tag);
 		document.title = "Note.rs : " + tag;
