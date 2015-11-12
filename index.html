@@ -41,6 +41,8 @@
 
 	window.onload = function(e) {
 		tag = storage.getItem("lastTag");
+		if(tag == "")
+			storage.setItem("lastTag", "MyFirstNote");
 		tagElement.innerHTML = tag;
 		note.value = storage.getItem(tag);
 		document.title = "Note.rs : " + tag;
