@@ -40,7 +40,7 @@
 	});
 
 	window.onload = function(e) {
-		if(storage.valueOf("lastTag") == null) {
+		if(storage.getItem("lastTag") == null) {
 			storage.setItem("lastTag", "MyFirstNote");
 			storage.setItem(tag, "Welcome! Please feel free to write a note :D");
 		}
