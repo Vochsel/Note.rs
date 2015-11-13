@@ -7,51 +7,94 @@
 </head>
 <body>
 	<div id="header">
-		<div id="title">Note.rs</div>
-		<div id="tag"><a id="symbol">#</a><a id="tag_text" contentEditable="true">ExamPrep</a></div>
-		<hr>
-	</div>
+		<div id="splash">Note.rs</div>
+		<div id="tagSelect">
+			<a id="tagGlyph">#</a><a id="tagText" contentEditable="true">ExamPrep</a></div>
+			<hr>
+		</div>
 	<textarea id="note" cols="100" rows="100"></textarea>
+
+
+
 	<script type="text/javascript">
 
 	var storage = localStorage;
 
-	var tag = "default";
+	var Preferences = {
+		lastTag: "Default"
+	};
 
-	var tagElement = document.getElementById("tag_text");
-	var note = document.getElementById("note");
+	var tag_DOM = document.getElementById("tag_text");
+	var note_DOM = document.getElementById("note");
 
+	var current_note = CreateNote("Default");
 
 	// Tag editing
+	tag_DOM.addEventListener('input', function(evt) {
+		var value = evt.target.innerHTML;
 
-	tagElement.addEventListener('input', function(evt) {
-		tag = evt.target.innerHTML;
-		storage.setItem("lastTag", tag);
-		note.value = storage.getItem(tag);
-		document.title = "Note.rs : " + tag;
-		console.log(tag);
+		Preferences.lastTag = value;						//Store last tag entered
+		StorePrefs(Preferences);
+		current_note = RetrieveNote(value);					//Load note by tag
+		note_DOM.value = current_note.text;					//Show new note
+		document.title = "Note.rs : " + current_note.tag;	//Update title
+		console.log(current_note.tag);
 	});
 
 	// Note editing
 
-	note.addEventListener('input', function(evt) {
-		var text = evt.target.value;
-		storage.setItem(tag, text);
+	note_DOM.addEventListener('input', function(evt) {
+		var value = evt.target.value;
+
+		current_note.text = value;	//Change current note
+		StoreNote(current_note);	//Store current note
 	});
 
 	window.onload = function(e) {
-		if(storage.getItem("lastTag") == null) {
+		/*if(storage.getItem("lastTag") == null) {
 			storage.setItem("lastTag", "MyFirstNote");
 			storage.setItem("MyFirstNote", "Welcome! Please feel free to write a note :D");
+		}*/
+
+		if(Preferences.lastTag == null) {
+			StorePrefs(Preferences);
 		}
-		tag = storage.getItem("lastTag");
+
+		// Load preferences
+		Preferences = RetrievePrefs();
+
+		//current_note = RetrieveNote(Preferences.lastTag);
 		
-		tagElement.innerHTML = tag;
-		note.value = storage.getItem(tag);
+		tag_DOM.innerHTML = current_note.tag;
+		note_DOM.value = current_note.text;
 		document.title = "Note.rs : " + tag;
 
 		console.log('hey');
 	};
+
+
+	function CreateNote(tag) {
+		return {
+			tag: tag,
+			text: "blank"
+		}
+	}
+
+	function StoreNote(note) {
+		storage.setItem("note_" + note.tag, JSON.stringify(note));
+	}
+
+	function RetrieveNote(tag) {
+		return JSON.parse(storage.getItem("note_" + tag));
+	}
+
+	function StorePrefs(prefs) {
+		storage.setItem("prefs", JSON.stringify(Preferences));
+	}
+
+	function RetrievePrefs() {
+		storage.getItem("prefs");
+	}
 
 	</script>
 	</body>
