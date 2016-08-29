@@ -4,6 +4,7 @@
 	<title>Note</title>
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<link href='https://fonts.googleapis.com/css?family=Josefin+Slab:400,700,100,300' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="js/keybind.js"></script>
 </head>
 <body>
 	<div id="header">
@@ -21,7 +22,9 @@
 	var tagElement = document.getElementById("tag_text");
 	var note = document.getElementById("note");
 
-
+	key.bind.add("k", {ctrl: true}, function(e) {
+		console.log("K pressed")
+	});
 	// Tag editing
 
 	tagElement.addEventListener('input', function(evt) {
