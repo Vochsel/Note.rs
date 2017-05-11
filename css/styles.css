@@ -31,10 +31,12 @@ body {
 	font-size: 3vw;
 	color: #8F631D;
 	cursor: text;
+	
 }
 
-#note {
-
+#hashtag {
+	outline: none;
+	border: none;
 	
 }
 
