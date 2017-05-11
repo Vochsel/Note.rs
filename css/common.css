@@ -19,6 +19,7 @@ body {
 /* Main text title for app */
 #logo {
 	font-size: 5vw;
+	color: orange;
 }
 
 /* Encapsulation for tag selection */

@@ -4,6 +4,9 @@
 		<title>Notes</title>
 
 		<!-- External Javascript -->
+		<script type="text/javascript" src="lib/wutils.js"></script>
+
+		<!-- Source Javascript -->
 		<script type="text/javascript" src="js/editor.js"></script>
 
 		<!-- External Styles -->
@@ -18,10 +21,10 @@
 		<div id="container">
 			<div id="header">
 				<!-- Note.rs Logo -->
-				<div id="logo">Notes</div>
+				<div id="logo">Note.rs</div>
 
 				<!-- Hashtag entry for note switching -->
-				<div id="nav"> <a>#</a><a id="tag" contentEditable="true">MyFirstNote</a> </div>
+				<div id="nav"> <a>#</a><a id="tag" contentEditable="true" spellcheck="false">MyFirstNote</a> </div>
 			</div>
 
 			<div id="content">
@@ -34,5 +37,35 @@
 				Ben Skinner 2015 &copy;
 			</div>
 		</div>
+
+		<script onload="NoteManager.loadCache();">
+			var currentNote = wutils.data.create(new Note("Welcome", "Note.rs"));
+
+			var content_dom = wutils.data.create();
+			content_dom.inlet("editor");
+			content_dom.outlet(wutils.data.presets.HTML, wutils.dom.get("editor"));
+			content_dom.outlet(function(value) {
+				currentNote.value.content = value;
+				currentNote.update();
+				NoteManager.saveNote(currentNote.value);
+			});
+
+			var tag_input = wutils.data.create("Welcome");
+			tag_input.inlet("tag", "input");
+			tag_input.outlet(function(value) {
+				//console.log(value);
+				//NoteManager.saveNote(currentNote.value);
+				//console.log(value);
+				//NoteManager.saveNote(currentNote.value);
+				//NoteManager.saveCache();
+				currentNote.update(NoteManager.loadNote((wutils.isValid(value)) ? value : "Temp"));
+				content_dom.value = currentNote.value.content;
+				content_dom.update();
+			});
+			//tag_input.outlet(wutils.data.presets.HTML, wutils.dom.get("tag"));
+
+
+
+		</script>
 	</body>
 </html>

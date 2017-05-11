@@ -2,14 +2,15 @@ body {
 	font-family: 'Josefin Slab', serif;
 }
 
-textarea {
+#editor {
 	outline: none;
 	border: none;
 	font-family: 'Josefin Slab', serif;
 
 	font-size: 2vw;
 	
-	width:100%;
+	width:50%;
+	margin: 0 auto;
 
 	-webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
@@ -35,4 +36,8 @@ textarea {
 #note {
 
 	
+}
+
+hr {
+	margin-top: 0.5vw;
 }
