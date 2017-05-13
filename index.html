@@ -90,11 +90,12 @@
 				// Update
 				currentNote.update();
 				editor.value = currentNote.value.content;
-				//editor.update();
+				//= this.getValue();
+				editor.updateInlets();
 			});
 
 			editor.inlet("editor");
-			editor.outlet(qd.presets.TextArea, wutils.dom.get("editor"));
+			//editor.outlet(qd.presets.TextArea, wutils.dom.get("editor"));
 			editor.outlet(function(val) {
 				currentNote.value.content = val;
 				currentNote.update();				//Shorten into one line??
