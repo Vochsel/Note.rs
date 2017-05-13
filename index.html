@@ -24,17 +24,26 @@
 
 			var qd = wutils.data;
 
+
 			// -- Storage Details
 			var storage = localStorage;
 
+			// -- Handle initial visit
+			if(storage["note.rs"] == null)
+				storage["note.rs"] = JSON.stringify({default:"empty"});
+
 			function StoreData(key, data)
 			{
-				storage[key] = data;
+				//storage[key] = data;
+				var o = JSON.parse(storage["note.rs"]);
+				o[key] = data;
+//debugger;
+				storage["note.rs"] = JSON.stringify(o);
 			}
 
 			function GetData(key)
 			{
-				return storage[key];
+				return JSON.parse(storage["note.rs"])[key];
 			}
 
 			function StoreObj(key, obj)
@@ -65,7 +74,7 @@
 			hashtag.inlet("hashtag");	//TODO: make inlet another qd object or html listener....
 			hashtag.outlet(function(val) {
 				// Store last tag
-				StoreNote(currentNote.value);
+				//StoreNote(currentNote.value);
 
 				// Populate new tag
 				var stored_tag = GetData(val);
@@ -81,7 +90,7 @@
 				// Update
 				currentNote.update();
 				editor.value = currentNote.value.content;
-				editor.update();
+				//editor.update();
 			});
 
 			editor.inlet("editor");
